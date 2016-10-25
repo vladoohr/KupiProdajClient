@@ -1,8 +1,9 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
+import { connect } from 'react-redux'
 
-export default class Navbar extends Component {
-	constructor() {
+class Header extends Component {
+ constructor() {
 		super()
 		this.state = {collapsed: true}
 	}
@@ -56,3 +57,5 @@ export default class Navbar extends Component {
 		)
 	}
 }
+
+export default Header

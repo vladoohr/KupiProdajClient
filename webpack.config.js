@@ -1,5 +1,3 @@
-var webpack = require('webpack')
-
 module.exports = {
   entry: [
     './src/index.js'
@@ -9,16 +7,6 @@ module.exports = {
     publicPath: '/',
     filename: 'bundle.js'
   },
-  plugins: process.env.NODE_ENV === 'production' ? [
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurrenceOrderPlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
-    new webpack.DefinePlugin({
-      'process.env': {
-          NODE_ENV: JSON.stringify(process.env.NODE_ENV),
-      },
-    })
-  ] : [],
   module: {
     loaders: [{
       exclude: /node_modules/,

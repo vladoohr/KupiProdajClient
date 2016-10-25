@@ -6,3 +6,12 @@
 #registracija a.nav-link {
 	color: #5BC0DE;
 }
+
+/*General*/
+em {
+	color: red;
+}
+
+.app {
+	background: #F1F1F1;
+}
