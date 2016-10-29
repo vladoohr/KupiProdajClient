@@ -8,11 +8,18 @@ import { Router, browserHistory } from 'react-router'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 injectTapEventPlugin();
 
+import { AUTH_USER } from './actions/types'
+
 import routes from './routes'
 import reducers from './reducers'
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(reducers)
+
+const token = localStorage.getItem('token')
+if (token) {
+	store.dispatch({type: AUTH_USER})
+}
 
 ReactDOM.render(
   <Provider store={store}>

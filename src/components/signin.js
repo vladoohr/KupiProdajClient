@@ -4,9 +4,9 @@ import { connect } from 'react-redux'
 
 import * as actions from '../actions/index'
 
-class Signup extends Component {
+class Signin extends Component {
   submitForm = values => {
-    this.props.signupUser(values)
+    this.props.signinUser(values)
   }
 
   renderError = () => {
@@ -35,33 +35,20 @@ class Signup extends Component {
     return(
       <div className="container m-t-3">
         <div className="col-md-6 offset-md-3">
-          <h1 className="signup-header">Креирај профил</h1>
+          <h1 className="signup-header">Најавете се</h1>
           <form onSubmit={handleSubmit(this.submitForm.bind(this))}>
-            <div className="form-group m-t-2">
-              <Field name="fullName" type="text" component={renderTextField} label="Име"/>
-            </div>
-
             <div className="form-group">
               <Field name="email" type="email" component={renderTextField} label="Е-маил"/>
-              <small className="form-text text-muted">Ние нема да ја споделуваме вашата е-маил адреса.</small>
-            </div>
-
-            <div className="form-group">
-              <Field name="phone" type="text" component={renderTextField} label="Телефон"/>
             </div>
 
             <div className="form-group">
               <Field name="password" type="password" component={renderTextField} label="Лозинка"/>
             </div>
-
-            <div className="form-group">
-              <Field name="confirm_password" type="password" component={renderTextField} label="Потврди лозинка"/>
-            </div>
-
+            
             {this.renderError()}    
             
             <div className="col-md-2 offset-md-5">
-              <button type="submit" disabled={!valid} className="btn btn-info m-t-2 m-b-2">Креирај</button>
+              <button type="submit" disabled={!valid} className="btn btn-info m-t-2 m-b-2">Најави се</button>
             </div>
           </form>
         </div>
@@ -72,7 +59,7 @@ class Signup extends Component {
 
 const validate = values => {
   const errors = {}
-  const required_fields = ['fullName', 'email', 'phone', 'password', 'confirm_password']
+  const required_fields = ['email', 'password']
 
   required_fields.forEach(field => {
     if (!values[field]) {
@@ -84,14 +71,6 @@ const validate = values => {
     errors.email = 'Невалидна е-маил адреса!'
   }
 
-  if (!/^\+?[0-9]{8,14}$/.test(values.phone)) {
-    errors.phone = 'Невалиден телефонски број!'
-  }
-
-  if(values.confirm_password && values.password !== values.confirm_password){
-    errors.confirm_password = 'Лозинките мора да се совпаѓаат!'
-  }
-
   return errors
 }
 
@@ -99,14 +78,14 @@ const mapStateToProps = state => {
   return {errorMessage: state.auth.error}
 }
 
-Signup = reduxForm({
-  form: "Signup",
+Signin = reduxForm({
+  form: "Signin",
   validate
-})(Signup)
+})(Signin)
 
-Signup = connect(
+Signin = connect(
   mapStateToProps,
   actions
-)(Signup)
+)(Signin)
 
-export default Signup
+export default Signin

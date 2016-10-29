@@ -22,6 +22,32 @@ class Header extends Component {
 		const { collapsed } = this.state
 		const collapseClass = this.state.collapsed ? 'collapse' : ''
 		const pullNavRight = this.state.collapsed ? 'pull-xs-right' : ''
+
+		const renderMenuItems = () => {
+		if (this.props.authenticated) {
+			return (
+			<ul className={ "nav navbar-nav " + pullNavRight}>
+			<li className="nav-item">
+    		<Link to="profil" className="nav-link right-nav-items">Име</Link>
+	    </li>
+	    <li className="nav-item">
+    		<Link to="signout" className="nav-link right-nav-items">Одјави се</Link>
+	    </li>			
+	    </ul>
+			)
+		} 
+		
+		return (
+			<ul className={ "nav navbar-nav " + pullNavRight}>
+			<li className="nav-item">
+    		<Link to="signin" className="nav-link right-nav-items">Најава</Link>
+	    </li>
+	    <li className="nav-item">
+    		<Link to="signup" className="nav-link right-nav-items">Регистрација</Link>
+	    </li>
+	    </ul>
+		)		
+	}
 	
 		return(
 			<nav className="navbar navbar-full navbar-dark bg-inverse">
@@ -43,14 +69,8 @@ class Header extends Component {
 					    </li>
 		        </ul>
 
-		        <ul className={ "nav navbar-nav " + pullNavRight}>
-		        	<li id="najava" className="nav-item">
-		        		<Link to="signin" className="nav-link">Најава</Link>
-					    </li>
-					    <li id="registracija" className="nav-item">
-		        		<Link to="signup" className="nav-link">Регистрација</Link>
-					    </li>
-		        </ul>
+		        {renderMenuItems()}
+		      
 		      </div>
 		    </div>
 			</nav>
@@ -58,4 +78,8 @@ class Header extends Component {
 	}
 }
 
-export default Header
+const mapStateToProps = state => {
+	return {authenticated: state.auth.authenticate}
+}
+
+export default connect(mapStateToProps)(Header)
