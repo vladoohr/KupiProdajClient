@@ -10,27 +10,29 @@ class Signin extends Component {
   }
 
   renderError = () => {
-    if (this.props.errorMessage) {
+    if (this.props.errorMessages.length) {
       return (
         <div className='alert alert-danger'>
-          <span>{this.props.errorMessage}</span>
+          <ul>
+            {this.props.errorMessages.map((msg) => <li key={msg} className='small'>{msg}</li>)}
+          </ul>
         </div>
       )
     }
   }
+  
+  renderTextField = ({ input, label, type, meta: { touched, error, warning } }) => (
+    <div>
+      <label>{label}</label>
+      <div>
+        <input {...input} className="form-control" placeholder={label} type={type}/>
+        {touched && ((error && <small><em>{error}</em></small>) || (warning && <span>{warning}</span>))}
+      </div>
+    </div>
+  )
 
   render() {
     const { handleSubmit, pristine, reset, submitting, valid } = this.props
-
-    const renderTextField = ({ input, label, type, meta: { touched, error, warning } }) => (
-      <div>
-        <label>{label}</label>
-        <div>
-          <input {...input} className="form-control" placeholder={label} type={type}/>
-          {touched && ((error && <small><em>{error}</em></small>) || (warning && <span>{warning}</span>))}
-        </div>
-      </div>
-    )
 
     return(
       <div className="container m-t-3">
@@ -38,11 +40,11 @@ class Signin extends Component {
           <h1 className="signup-header">Најавете се</h1>
           <form onSubmit={handleSubmit(this.submitForm.bind(this))}>
             <div className="form-group">
-              <Field name="email" type="email" component={renderTextField} label="Е-маил"/>
+              <Field name="email" type="email" component={this.renderTextField} label="Е-маил" />
             </div>
 
             <div className="form-group">
-              <Field name="password" type="password" component={renderTextField} label="Лозинка"/>
+              <Field name="password" type="password" component={this.renderTextField} label="Лозинка" />
             </div>
             
             {this.renderError()}    
@@ -75,7 +77,7 @@ const validate = values => {
 }
 
 const mapStateToProps = state => {
-  return {errorMessage: state.auth.error}
+  return {errorMessages: state.auth.errors}
 }
 
 Signin = reduxForm({

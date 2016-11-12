@@ -10,11 +10,14 @@ import Signin from './components/signin'
 import Signout from './components/signout'
 import Help from './components/help' 
 import NotFound from './components/not_found'
+import Authentication from './components/require_authentication'
+
+const ComposedComp = Authentication(NewАdvertisement)
 
 export default (
 	<Route path='/' component={App}>
 		<IndexRoute component={Advertisement} />
-		<Route path='new' component={NewАdvertisement} />
+		<Route path='new' component={ComposedComp} />
 		<Route path='help' component={Help} />
 		<Route path='signup' component={Signup} />
 		<Route path='signin' component={Signin} />

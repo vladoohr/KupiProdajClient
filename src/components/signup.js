@@ -10,27 +10,29 @@ class Signup extends Component {
   }
 
   renderError = () => {
-    if (this.props.errorMessage) {
+    if (this.props.errorMessages.length) {
       return (
         <div className='alert alert-danger'>
-          <span>{this.props.errorMessage}</span>
+          <ul>
+            {this.props.errorMessages.map((msg) => <li key={msg} className='small'>{msg}</li>)}
+          </ul>
         </div>
       )
     }
   }
 
+  renderTextField = ({ input, label, type, meta: { touched, error, warning } }) => (
+    <div>
+      <label>{label}</label>
+      <div>
+        <input {...input} className="form-control" placeholder={label} type={type}/>
+        {touched && ((error && <small><em>{error}</em></small>) || (warning && <span>{warning}</span>))}
+      </div>
+    </div>
+  )
+
   render() {
     const { handleSubmit, pristine, reset, submitting, valid } = this.props
-
-    const renderTextField = ({ input, label, type, meta: { touched, error, warning } }) => (
-      <div>
-        <label>{label}</label>
-        <div>
-          <input {...input} className="form-control" placeholder={label} type={type}/>
-          {touched && ((error && <small><em>{error}</em></small>) || (warning && <span>{warning}</span>))}
-        </div>
-      </div>
-    )
 
     return(
       <div className="container m-t-3">
@@ -38,24 +40,24 @@ class Signup extends Component {
           <h1 className="signup-header">Креирај профил</h1>
           <form onSubmit={handleSubmit(this.submitForm.bind(this))}>
             <div className="form-group m-t-2">
-              <Field name="fullName" type="text" component={renderTextField} label="Име"/>
+              <Field name="full_name" type="text" component={this.renderTextField} label="Име"/>
             </div>
 
             <div className="form-group">
-              <Field name="email" type="email" component={renderTextField} label="Е-маил"/>
+              <Field name="email" type="email" component={this.renderTextField} label="Е-маил"/>
               <small className="form-text text-muted">Ние нема да ја споделуваме вашата е-маил адреса.</small>
             </div>
 
             <div className="form-group">
-              <Field name="phone" type="text" component={renderTextField} label="Телефон"/>
+              <Field name="phone" type="text" component={this.renderTextField} label="Телефон"/>
             </div>
 
             <div className="form-group">
-              <Field name="password" type="password" component={renderTextField} label="Лозинка"/>
+              <Field name="password" type="password" component={this.renderTextField} label="Лозинка"/>
             </div>
 
             <div className="form-group">
-              <Field name="confirm_password" type="password" component={renderTextField} label="Потврди лозинка"/>
+              <Field name="password_confirmation" type="password" component={this.renderTextField} label="Потврди лозинка"/>
             </div>
 
             {this.renderError()}    
@@ -72,31 +74,43 @@ class Signup extends Component {
 
 const validate = values => {
   const errors = {}
-  const required_fields = ['fullName', 'email', 'phone', 'password', 'confirm_password']
+  const required_fields = ['full_name', 'email', 'phone', 'password', 'password_confirmation']
 
   required_fields.forEach(field => {
     if (!values[field]) {
-      errors[field] = 'Задолжително поле!'
+      errors[field] = 'Задолжително поле'
     }    
   })
 
+  if(values .full_name && (values.full_name.length < 3 || values.full_name.length > 50)) {
+    errors.full_name = 'Името може да содржи минимум 3, максимум 50 карактери'
+  }
+
   if (values.email && !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = 'Невалидна е-маил адреса!'
+    errors.email = 'Невалидна е-маил адреса'
   }
 
   if (!/^\+?[0-9]{8,14}$/.test(values.phone)) {
-    errors.phone = 'Невалиден телефонски број!'
+    errors.phone = 'Невалиден телефонски број'
   }
 
-  if(values.confirm_password && values.password !== values.confirm_password){
-    errors.confirm_password = 'Лозинките мора да се совпаѓаат!'
+  if(values.password && values.password.length < 6) {
+    errors.password = 'Лозинка мора да има минимум 6 карактери'
+  }
+
+  if(values.password_confirmation && values.password_confirmation.length < 6) {
+    errors.password_confirmation = 'Потврди лозинка мора да има минимум 6 карактери'
+  }
+
+  if(values.password_confirmation && values.password !== values.password_confirmation) {
+    errors.password_confirmation = 'Лозинките мора да се совпаѓаат'
   }
 
   return errors
 }
 
 const mapStateToProps = state => {
-  return {errorMessage: state.auth.error}
+  return {errorMessages: state.auth.errors}
 }
 
 Signup = reduxForm({

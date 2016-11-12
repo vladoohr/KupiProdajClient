@@ -1,13 +1,60 @@
 /* Navbar*/
-a.right-nav-items {
-	color: #5BC0DE !important;
+#top-navbar {
+	height: 1.4rem !important;
+}
+
+#top-navbar .navbar-nav .nav-link {
+	padding: 0rem !important;
+	margin: 0rem !important;
+	margin-top: 0.1rem !important;
+}
+
+#top-navbar .navbar-nav .nav-link:hover {
+	font-weight: bold;
+} 
+
+#top-navbar .navbar-nav .nav-item + .nav-item {
+  margin-left: 0.25rem;  
+}
+
+em.gray {
+	border-right: solid 1px;
+}
+
+.signout:hover {
+	font-weight: bold;
 }
 
 /*General*/
-em {
-	color: red;
+textarea{
+	width: 100% !important;
+	height: 7rem !important;
+}
+
+.red{
+	color: #E21937 !important;
+}
+
+.green{
+	color: #96E264 !important;
+}
+
+.blue{
+	color: #3CB9EC !important;
+}
+
+.gray {
+	color: #555555 !important;
+}
+
+.black {
+	color: #373A3C !important;
 }
 
 .app {
-	background: #F1F1F1;
+	background: #F1F1F1 !important;
+}
+
+.text-bold {
+	font-weight: bold !important;
 }

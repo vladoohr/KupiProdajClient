@@ -4,15 +4,19 @@ import {
 	UNAUTH_USER
 } from '../actions/types'
 
-export default function(state={}, action) {
+const INITIAL_STATE = {
+	user: {},
+	authenticate: false,
+	errors: []
+}
+export default function( state=INITIAL_STATE, action ) {
 	switch(action.type) {
 		case AUTH_USER:
-			return {...state, error: '', authenticate: true}
+			return { ...state, user: action.payload.user, authenticate: true, errors: [] }
 		case AUTH_ERROR:
-			return {...state, error: action.payload, authenticate: false}
+			return { ...state, authenticate: false, errors: action.payload.errors }
 		case UNAUTH_USER:
-		return {...state, error: '', authenticate: false}
+			return { ...state, user: {}, authenticate: false, errors: [] }
 	}
-
 	return state
 }
