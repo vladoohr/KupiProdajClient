@@ -20,18 +20,25 @@ class Header extends Component {
 		const helpActive = location.pathname.match(/help/) ? 'active' : ''
 		const signinActive = location.pathname.match(/signin/) ? 'text-bold' : ''
 		const signupActive = location.pathname.match(/signup/) ? 'text-bold' : ''
+		const userAds = location.pathname.match(/user\/ads/) ? 'text-bold' : ''
 
 		const { collapsed } = this.state
 		const collapseClass = this.state.collapsed ? 'collapse' : ''
 		const pullNav = this.state.collapsed ? 'pull-xs-right' : 'pull-xs-left'
-
+		
 		const renderMenuItems = () => {
 			if (authenticated) {
 				return (
-				<ul className="nav navbar-nav ">
+				<ul className="nav navbar-nav">
 					<li className="nav-item">
 		    		<Link to="profil" className="nav-link gray small black">{user.full_name}</Link>
 			    </li>
+			    <li className="nav-item">
+		    		<em className='gray small'/>
+			    </li>
+			    <li className="nav-item">
+		    		<Link to={`/user/ads/${user.id}?page=1`} className={`nav-link gray small ${userAds}`}>Твои огласи</Link>
+			    </li>			
 			    <li className="nav-item">
 		    		<em className='gray small'/>
 			    </li>
@@ -70,19 +77,19 @@ class Header extends Component {
 
 
 		  			<div className={ "navbar-toggleable-xs " + collapseClass}>
-			  			<a className="navbar-brand" href="/">
+			  			<a className="navbar-brand" href="/?page=1">
 						    <img src="../../images/logo.jpg" width="40" height="40" className="d-inline-block align-top" alt="" />
 						    <em> KupiProdaj.mk</em>
 						  </a>
 			        <ul className={"nav navbar-nav " + pullNav}>
 			        	<li className={ "nav-item " + rootActive }>
-			        		<Link to="/" className="nav-link">Сите огласи <em className='red'>/</em></Link>
+			        		<Link to="/?page=1" className="nav-link">Сите огласи <em className='red'>/</em></Link>
 						    </li>
 						    <li className={ "nav-item " + newActive }>
-			        		<Link to="new" className="nav-link">Внеси оглас  <em className='green'>/</em></Link>
+			        		<Link to="/ads/new" className="nav-link">Внеси оглас  <em className='green'>/</em></Link>
 						    </li>
 						    <li className={ "nav-item " + helpActive }>
-			        		<Link to="help" className="nav-link">Помош <em className='blue'>/</em></Link>
+			        		<Link to="/help" className="nav-link">Помош <em className='blue'>/</em></Link>
 						    </li>
 			        </ul>
 			      </div>

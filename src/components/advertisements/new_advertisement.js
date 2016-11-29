@@ -2,11 +2,33 @@ import React, { Component } from 'react';
 import { Field, Fields, reduxForm } from 'redux-form'
 import { connect } from 'react-redux';
 
-import * as actions from '../actions'
+import * as actions from '../../actions'
 
 class NewAdvertisements extends Component {
+  componentWillMount(){
+    this.props.getCities()
+    this.props.getCategories()
+  }
+
   submitForm = values => {
-    this.props.newAdvertisement(values)
+    const { id } = JSON.parse(localStorage.getItem('user'))
+    const { newAdvertisement } = this.props;
+    values.user = id
+
+    if (values.image) {
+      // Make File object base64 encoded
+      let reader = new FileReader()
+      // onload method is triggered by readAsDataURL
+      reader.onload = () => {
+          values.image = reader.result;
+
+          // call newAdvertisement here beacause onload method run asynchronously 
+          newAdvertisement(values)
+      }
+      reader.readAsDataURL(values.image[0])      
+    } else {
+      newAdvertisement(values)
+    }
   }
 
   renderError = () => {
@@ -47,17 +69,21 @@ class NewAdvertisements extends Component {
 
   rednerSelectField = ({ input, meta: { touched, error, warning }, children, className, label }) => {
     return(
+      <div>
+        <label>{label}</label>
         <div>
-          <label>{label}</label>
-          <div>
-            <select {...input} className={className} >
-              {children}
-            </select>
-            {touched && ((error && <small><em>{error}</em></small>) || (warning && <span>{warning}</span>))}
-          </div>
+          <select {...input} className={className} >
+            {children}
+          </select>
+          {touched && ((error && <small><em>{error}</em></small>) || (warning && <span>{warning}</span>))}
         </div>
+      </div>
     )
   }
+
+  renderItems = (items) => (
+    items.map(item => <option value={item.id} key={item.id}>{item.name}</option>)
+  )
 
   render() {
     const { handleSubmit, pristine, reset, submitting, valid } = this.props
@@ -66,7 +92,7 @@ class NewAdvertisements extends Component {
     	<div className="container m-t-3">
         <div className="col-md-8 offset-md-2">
           <h1 className="signup-header">Внеси оглас</h1>
-          <form onSubmit={handleSubmit(this.submitForm.bind(this))} encType="multipart/form-data">
+          <form onSubmit={handleSubmit(this.submitForm.bind(this))} encType="multipart/form-data" >
             <div className="form-group">
               <Field name="title" type="text" component={this.renderTextField} label="Наслов" />
             </div>
@@ -82,32 +108,36 @@ class NewAdvertisements extends Component {
               <small className="form-text text-muted">Доколку не наведете цена таа ќе биде "По договор".</small>
 						</div>
 
+            <div className="form-group">
+              <Field name="category" component={this.rednerSelectField} className="form-control" label="Категорија">
+                <option>-Избери-</option>
+                { this.renderItems(this.props.categories) }
+              </Field>
+            </div>
+
 						<div className="form-group">
 					    <Field name="state" component={this.rednerSelectField} className="form-control" label="Состојба">
                 <option>-Избери-</option>
-                <option>Нов</option>
-					      <option>Половен</option>
+                { this.renderItems([{id: "Нов", name: "Нов"}, {id: "Поволен", name: "Поволен"}]) }
 					    </Field>
 					  </div>
 
 						<div className="form-group">
 					    <Field name="purpose" component={this.rednerSelectField} className="form-control" label="Вид">
                 <option>-Избери-</option>
-					      <option>Се продава</option>
-					      <option>Се купува</option>
+                { this.renderItems([{id: "Се продава", name: "Се продава"}, {id: "Се купува", name: "Се купува"}]) }
 					    </Field>
 					  </div>
 
 						<div className="form-group">
 					    <Field name="location" component={this.rednerSelectField} className="form-control" label="Локација">
                 <option>-Избери-</option>
-					      <option value='1'>Скопје</option>
-					      <option value='2'>Охрид</option>
+					      { this.renderItems(this.props.cities) }
 					    </Field>
 					  </div>
 
 					  <div className="form-group">
-              <Field name="photo" type="file" component={this.renderTextField} label="Слика" />
+              <Field name="image" type="file" component={this.renderTextField} label="Слика" />
             </div>
 
             { this.renderError() }
@@ -124,7 +154,7 @@ class NewAdvertisements extends Component {
 
 const validate = values => {
   const errors = {}
-  const required_fields = ['title', 'description', 'state', 'purpose']
+  const required_fields = ['title', 'description', 'state', 'purpose', 'category', 'location']
 
   required_fields.forEach(field => {
     if (!values[field]) {
@@ -136,8 +166,8 @@ const validate = values => {
     errors.title = 'Насловот може да содржи максимум 75 карактери!'
   }
 
-  if(values.description && values.description.length > 75) {
-    errors.title = 'Описот може да содржи максимум 500 карактери!'
+  if(values.description && values.description.length > 500) {
+    errors.description = 'Описот може да содржи максимум 500 карактери!'
   }
 
   if (values.state && values.state == "-Избери-") {
@@ -152,11 +182,22 @@ const validate = values => {
     errors.price = 'Невалиден цена'
   }
 
+  if (values.price && values.price.length > 9) {
+    errors.price = 'Цената може да има максимум 9 цифри!'
+  }  
+
   return errors
 }
 
 const mapStateToProps = state => {
-  return {errorMessages: state.ads.errorMessages}
+  let initData = state.ads.data
+
+  return {
+    errorMessages: state.ads.errorMessages,
+    successMesage: state.ads.successMesage,
+    cities: state.items.cities,
+    categories: state.items.categories
+  }
 }
 
 NewAdvertisements = reduxForm({

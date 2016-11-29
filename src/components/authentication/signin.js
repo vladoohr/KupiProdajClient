@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import { Field, reduxForm } from "redux-form"
 import { connect } from 'react-redux'
 
-import * as actions from '../actions/index'
+import * as actions from '../../actions'
 
 class Signin extends Component {
   submitForm = values => {
@@ -50,7 +50,7 @@ class Signin extends Component {
             {this.renderError()}    
             
             <div className="col-md-2 offset-md-5">
-              <button type="submit" disabled={!valid} className="btn btn-info m-t-2 m-b-2">Најави се</button>
+              <button type="submit" disabled={!valid} className="btn btn-info m-t-2">Најави се</button>
             </div>
           </form>
         </div>

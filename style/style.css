@@ -26,6 +26,17 @@ em.gray {
 }
 
 /*General*/
+html {
+  font-size: 10px;
+  font-family: sans-serif;
+}
+
+footer {
+	color: #373A3C;
+	text-align: center;
+	z-index: 10;
+}
+
 textarea{
 	width: 100% !important;
 	height: 7rem !important;
@@ -57,4 +68,39 @@ textarea{
 
 .text-bold {
 	font-weight: bold !important;
+}
+
+/*Advertisement*/
+.advertisement {
+  background: #fcf9f9;
+  box-shadow: 0 0 0 5px rgba(0,0,0,0.03);
+}
+
+.search-ad-image {
+	border: 1px solid #CDCDCE;
+}
+
+.search-ad-title {
+  /* word-break: break-all; */
+  font-size: 16px;
+  font-weight: bold;
+  color: #333333 !important;
+  text-decoration: none;
+}
+
+.search-ad-price {
+	font-weight: bold;
+  color: #428bca;
+}
+
+.right-text {
+	text-align: right;
+	color: #555555;
+	font-weight: bold;
+}
+
+.left-text {
+	text-align: left;
+	color: #555555;
+	font-weight: bold;	
 }
