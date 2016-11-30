@@ -15,7 +15,7 @@ import {
 	GET_CATEGORIES
 } from './types'
 
-const ROOT_URL = 'http://advertisementsserver.herokuapp.com/'
+const ROOT_URL = 'https://advertisementsserver.herokuapp.com/'
 
 export function signupUser(values) {
 	return dispatch => {
