@@ -76,7 +76,7 @@ export function newAdvertisement(values) {
 					type: NEW_AD,
 					payload: response.data.message 
 				})
-				browserHistory.push(`/user/ads/${values.user}?page=1`)
+				browserHistory.push(`/user/ads/${values	.user}?page=1`)
 			})
 			.catch(error => {
 				dispatch({
