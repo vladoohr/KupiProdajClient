@@ -9,7 +9,7 @@ export default class Advertisement extends React.Component {
     if (! image) {
     	image_url = '../../../images/images.jpg'
     } else {
-    	image_url = `http://localhost:3000/${image}`
+    	image_url = image
     }
 
     return (
