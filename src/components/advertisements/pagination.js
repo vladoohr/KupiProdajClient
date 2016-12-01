@@ -11,17 +11,19 @@ class Pagination extends Component {
 	renderPaginationItem() {
 		const { page } = this.props.location.query
 		const { pathname } = this.props.location
-		const { user } = this.props
+		const { user, ads } = this.props
 		const ads_per_page = 3
-		const pages = Math.floor((this.props.ads.length + ads_per_page -1) / ads_per_page)
+		const pages = Math.floor((ads.length + ads_per_page -1) / ads_per_page)
 		let links = [];
 
-		for (let i = 1; i <= pages; i++) {
-			if (i == page) {
-	    	links.push(<li className="page-item active" key={i}><Link to={`${pathname}?page=${i}`} onClick={this.updateAds.bind(this, i)} className="page-link">{i}</Link></li>)
-			} else {
-	    	links.push(<li className="page-item" key={i}><Link to={`${pathname}?page=${i}`} onClick={this.updateAds.bind(this, i)} className="page-link">{i}</Link></li>)				
-			}
+		if ( ads.length > 3 ) {
+			for (let i = 1; i <= pages; i++) {
+				if (i == page) {
+		    	links.push(<li className="page-item active" key={i}><Link to={`${pathname}?page=${i}`} onClick={this.updateAds.bind(this, i)} className="page-link">{i}</Link></li>)
+				} else {
+		    	links.push(<li className="page-item" key={i}><Link to={`${pathname}?page=${i}`} onClick={this.updateAds.bind(this, i)} className="page-link">{i}</Link></li>)				
+				}
+			}			
 		}
 
 		return links

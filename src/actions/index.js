@@ -15,7 +15,7 @@ import {
 	GET_CATEGORIES
 } from './types'
 
-const ROOT_URL = 'https://advertisementsserver.herokuapp.com/'
+const ROOT_URL = 'http://localhost:3000'
 
 export function signupUser(values) {
 	return dispatch => {
@@ -42,7 +42,6 @@ export function signinUser({email, password}) {
 	return dispatch => {
 		axios.post(`${ROOT_URL}/api/v1/users/signin`, {email, password})
 			.then(response => {
-				console.log(response)
 				dispatch({
 					type: AUTH_USER,
 					payload: response.data
@@ -77,6 +76,7 @@ export function newAdvertisement(values) {
 					type: NEW_AD,
 					payload: response.data.message 
 				})
+				browserHistory.push(`/user/ads/${values.user}?page=1`)
 			})
 			.catch(error => {
 				dispatch({
