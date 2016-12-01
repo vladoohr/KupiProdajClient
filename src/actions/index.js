@@ -15,7 +15,7 @@ import {
 	GET_CATEGORIES
 } from './types'
 
-const ROOT_URL = 'http://localhost:3000'
+const ROOT_URL = 'https://advertisementsserver.herokuapp.com'
 
 export function signupUser(values) {
 	return dispatch => {
@@ -76,7 +76,7 @@ export function newAdvertisement(values) {
 					type: NEW_AD,
 					payload: response.data.message 
 				})
-				browserHistory.push(`/user/ads/${values.user}?page=1`)
+				browserHistory.push(`/user/ads/${values	.user}?page=1`)
 			})
 			.catch(error => {
 				dispatch({
