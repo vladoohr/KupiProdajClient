@@ -42,6 +42,10 @@ textarea{
 	height: 7rem !important;
 }
 
+.middleContent {
+	margin-top: 10px;
+}
+
 .red{
 	color: #E21937 !important;
 }
@@ -76,6 +80,10 @@ textarea{
   box-shadow: 0 0 0 5px rgba(0,0,0,0.03);
 }
 
+.advertisements {
+	margin-top: 10px;
+}
+
 .search-ad-image {
 	border: 1px solid #CDCDCE;
 }
@@ -104,3 +112,27 @@ textarea{
 	color: #555555;
 	font-weight: bold;	
 }
+
+/*Sidebar*/
+.nav-stacked {
+	background-color: #FCF9F9;
+	color: #333333;
+	font-weight: bold;
+	margin-top: 20px;
+}
+
+.nav-stacked a.nav-link:hover {
+	background-color: #0275D8;
+}
+
+.search {
+	margin-bottom: 20px;
+}
+
+.search input {
+	width: 70% !important;
+}
+
+.search button {
+	margin-left: 10px; 
+} 

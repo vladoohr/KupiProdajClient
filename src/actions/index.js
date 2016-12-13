@@ -15,7 +15,8 @@ import {
 	GET_CATEGORIES
 } from './types'
 
-const ROOT_URL = 'https://advertisementsserver.herokuapp.com'
+// const ROOT_URL = 'https://advertisementsserver.herokuapp.com'
+const ROOT_URL ='http://localhost:3000/'
 
 export function signupUser(values) {
 	return dispatch => {
@@ -117,9 +118,10 @@ export function getUserAdvertisements(id, page) {
 	}
 }
 
-export function getAdvertisements(page) {
+export function getAdvertisements(page, values) {
+	console.log(values)
 	return dispatch => {
-		axios.get(`${ROOT_URL}/api/v1/advertisements?page=${page}`)
+		axios.get(`${ROOT_URL}/api/v1/advertisements?page=${page}`, { params: values })
 			.then(response => {
 				dispatch({
 					type: GET_ADS,

@@ -13,12 +13,12 @@ export default class Advertisement extends React.Component {
     }
 
     return (
-    	<div className="col-md-10 m-t-1 advertisement">
-    		<div className=" col-md-4 m-t-1 pull-left">
+    	<div className="col-md-10 advertisement">
+    		<div className=" col-md-5 m-t-1 pull-left">
     			<img className="search-ad-image" src={image_url} height="150" width="150" /> 
     			<p className="m-l-2"><small>{updated_at}</small></p>
     		</div>
-    		<div className="col-md-8 m-t-1">
+    		<div className="col-md-7 m-t-1">
     			<Link to={`/ad/${id}`} className="search-ad-title">{title}</Link>
     			<p className="search-ad-price">{price ? `${price} МКД` : 'По договор'}</p> 					
     			<p className="right-text m-t-3">{city}</p>

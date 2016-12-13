@@ -29,7 +29,7 @@ export default class App extends Component {
     return (
   		<div>
 	    	<Header location={this.props.location}/>
-        <div style={this.state.style}>
+        <div className="middleContent" style={this.state.style}>
 	    	 {this.props.children}
         </div>
         <Footer />
