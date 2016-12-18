@@ -54,7 +54,7 @@ class Advertisements extends Component {
 
 		return(
 			categories.map((item, index) => {
-				if (index+1 === this.state.category) {
+				if (index === this.state.category) {
 					return <Link onClick={this.handleCategory.bind(this, index)} className='nav-link active' key={item}>{item}</Link>					
 				} else {
 					return <Link onClick={this.handleCategory.bind(this, index)} className='nav-link' key={item}>{item}</Link>
