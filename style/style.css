@@ -78,6 +78,7 @@ textarea{
 .advertisement {
   background: #fcf9f9;
   box-shadow: 0 0 0 5px rgba(0,0,0,0.03);
+  padding: 10px;
 }
 
 .advertisements {
@@ -113,6 +114,13 @@ textarea{
 	font-weight: bold;	
 }
 
+.ad-change-btn {
+	margin-bottom: 10px;
+}
+
+.btn-danger {
+	color: white !important;
+}
 /*Sidebar*/
 .nav-stacked {
 	background-color: #FCF9F9;
@@ -135,4 +143,33 @@ textarea{
 
 .search button {
 	margin-left: 10px; 
-} 
+}
+
+.featured-title {
+  text-align: center;	
+}
+
+.featured-title a {
+	font-size: 10px;
+  font-weight: bold;
+  color: #333333 !important;
+  text-decoration: none;
+}
+
+.featured-price {
+	font-weight: bold;
+	font-size: 14px;
+  color: #428bca;
+  text-align: center;
+}
+
+.featured-ad {
+	margin-top: 20px;	
+}
+
+.featured-image {
+	width: 80%;
+	margin-left: 10%;
+	margin-right: 10%;
+	height: 100px;
+}

@@ -10,31 +10,56 @@ class SingleAdvertisement extends React.Component {
         this.props.loadData(ad_id)
     }
 
+    handleDeleteAd() {
+        const r = confirm("Дали сте сигурен?")
+        if (r == true) {
+           this.props.deleteAdvertisement(this.props.ad.id, this.props.user.id)
+        }
+    }
+
+    renderButtons() {
+        const user = JSON.parse(localStorage.getItem('user'))
+        const ad_user_id = this.props.ad.user_id
+        const ad_id = this.props.ad.id
+
+        if ( user && user.id == ad_user_id) {
+            return (
+                <div className="col-md-2">
+                    <div className="ad-change-btn">
+                        <Link to={`/ads/edit/${ad_id}`} className="btn btn-primary">Промени</Link>
+                    </div>
+                    <div>
+                        <Link onClick={this.handleDeleteAd.bind(this)} className="btn btn-danger">Избриши</Link>
+                    </div>
+                </div>
+            )
+        } else {
+            return ''
+        }
+    }
+
 	render() {
         const { id, image, title, description, price, updated_at, city, category } = this.props.ad
         const { full_name, email, phone } = this.props.user
-        let image_url;
-
-        if (! image) {
-            image_url = '../../../images/images.jpg'
-        } else {
-            image_url = `http://localhost:3000/${image}`
-        }
+        const image_url = image ? image : '../../../images/images.jpg';
 
         return (
             <div className="container">
-                <div className="col-md-10 m-t-3 advertisement">
-                    <div className=" col-md-4 m-t-1 pull-left">
+                <div className="col-md-10 advertisement">
+                    <div className=" col-md-4 pull-left">
                         <img className="search-ad-image" src={image_url} height="150" width="150" /> 
                         <p className="m-l-2"><small>{updated_at}</small></p>
                         <p className="left-text">&#9737; {city}</p>
                         <p className="left-text">&#9759; {category}</p>
                     </div>
-                    <div className="col-md-8 m-t-1">
+                    <div className="col-md-6 m-t-1">
                         <Link to={`/ad/${id}`} className="search-ad-title">{title}</Link>
                         <p className="m-t-1">{description}</p>
                         <p className="search-ad-price">{price ? `${price} МКД` : 'По договор'}</p>
                     </div>
+
+                    { this.renderButtons() }
+
                     <div className="col-md-12">
                         <p className="right-text m-t-3">&#9817; {full_name}</p>
                         <p className="right-text">&#9990; <Link to={`tel:${phone}`}>{phone}</Link></p>

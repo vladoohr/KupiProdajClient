@@ -18,12 +18,12 @@ class UserАdvertisements extends Component {
 	}
 
 	rednerSuccessMessage() {
-		const { successMesage } = this.props
+		const { successMessage } = this.props
 
-		if (successMesage) {
+		if (successMessage) {
 			return (
-				<div class="alert alert-success">
-					{ successMesage }
+				<div className="alert alert-success" role="alert">
+				  <strong>{ successMessage }</strong>
 				</div>
 			)
 		}
@@ -50,7 +50,7 @@ const mapStateToProps = (state) => {
 		user: state.auth.user,
 		user_ads: state.auth.user_ads,
 		user_ads_per_page: state.auth.user_ads_per_page,
-		successMesage: state.ads.successMesage
+		successMessage: state.ads.successMessage
 	}
 }
 

@@ -7,8 +7,10 @@ import {
 	UNAUTH_USER,
 	GET_USER_ADS,
 	GET_ADS,
+	FEATURED_AD,
 	NEW_AD,
 	EDIT_AD,
+	DELETE_AD,
 	ERROR_AD,
 	LOAD,
 	GET_CITIES,
@@ -77,7 +79,7 @@ export function newAdvertisement(values) {
 					type: NEW_AD,
 					payload: response.data.message 
 				})
-				browserHistory.push(`/user/ads/${values	.user}?page=1`)
+				browserHistory.push(`/user/ads/${values.user}?page=1`)
 			})
 			.catch(error => {
 				dispatch({
@@ -106,6 +108,19 @@ export function editAdvertisement(values, ad_id) {
 	}
 }
 
+export function deleteAdvertisement(ad_id, user_id) {
+	return dispatch => {
+		axios.delete(`${ROOT_URL}/api/v1/advertisements/${ad_id}`)
+			.then(response => {
+				dispatch({
+					type: DELETE_AD,
+					payload: 'Огласот е избришан'
+				})
+				browserHistory.push(`/user/ads/${user_id}?page=1`)
+			})
+	}
+}
+
 export function getUserAdvertisements(id, page) {
 	return dispatch => {
 		axios.get(`${ROOT_URL}/api/v1/users/advertisements/${id}?page=${page}`)
@@ -119,7 +134,6 @@ export function getUserAdvertisements(id, page) {
 }
 
 export function getAdvertisements(page, values) {
-	console.log(values)
 	return dispatch => {
 		axios.get(`${ROOT_URL}/api/v1/advertisements?page=${page}`, { params: values })
 			.then(response => {
@@ -129,6 +143,19 @@ export function getAdvertisements(page, values) {
 				})
 			})
 	}	
+}
+
+export function getFeaturedAd() {
+	return dispatch => {
+		axios.get(`${ROOT_URL}/api/v1/advertisement/featured`)
+			.then(response => {
+				console.log(response.data)
+				dispatch({
+					type: FEATURED_AD,
+					payload: response.data 
+				})
+			})
+	}
 }
 
 export function loadData(id) {

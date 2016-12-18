@@ -4,14 +4,8 @@ import { Link } from 'react-router'
 export default class Advertisement extends React.Component {
 	render() {
     const { id, image, title, price, updated_at, city, category } = this.props.ad
-    let image_url;
-
-    if (! image) {
-    	image_url = '../../../images/images.jpg'
-    } else {
-    	image_url = image
-    }
-
+    const image_url = image ? image : '../../../images/images.jpg';
+ 
     return (
     	<div className="col-md-10 advertisement">
     		<div className=" col-md-5 m-t-1 pull-left">

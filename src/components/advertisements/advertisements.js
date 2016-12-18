@@ -19,6 +19,7 @@ class Advertisements extends Component {
 	componentWillMount() {
 		const { search, category } = this.state
 		this.props.getAdvertisements(1, {search, category})
+		this.props.getFeaturedAd()
 	}
 
 	getAds(page) {
@@ -54,9 +55,9 @@ class Advertisements extends Component {
 		return(
 			categories.map((item, index) => {
 				if (index+1 === this.state.category) {
-					return <Link onClick={this.handleCategory.bind(this, index+1)} className='nav-link active' key={item}>{item}</Link>					
+					return <Link onClick={this.handleCategory.bind(this, index)} className='nav-link active' key={item}>{item}</Link>					
 				} else {
-					return <Link onClick={this.handleCategory.bind(this, index+1)} className='nav-link' key={item}>{item}</Link>
+					return <Link onClick={this.handleCategory.bind(this, index)} className='nav-link' key={item}>{item}</Link>
 				}
 			})
 		)
@@ -64,7 +65,15 @@ class Advertisements extends Component {
 
 	render() {
 		const { location } = this.props
-		const { handleSubmit, pristine, reset, submitting } = this.props
+		const { handleSubmit, pristine, reset, submitting, featured_ad } = this.props
+
+    let image_url;
+
+    if (! featured_ad.image) {
+    	image_url = '../../../images/images.jpg'
+    } else {
+    	image_url = featured_ad.image
+    }
 
 		return (
 				<div className='container'>
@@ -72,6 +81,13 @@ class Advertisements extends Component {
 						<nav className="nav nav-pills nav-stacked">
 							{this.renderCategories()}
 						</nav>
+						<div className="featured-ad">					
+		    			<img className="featured-image" src={image_url}/>
+		    			<div className="featured-title">
+		    				<Link to={`/ad/${featured_ad.id}`}>{featured_ad.title}</Link>
+		    			</div>
+		    			<p className="featured-price">{featured_ad.price} МКД</p> 
+		    		</div>
 					</div>
 					
 					<div className="col-md-10 advertisements">
@@ -95,7 +111,8 @@ const mapStateToProps = (state) => {
 	return { 
 		user: state.auth.user,
 		ads: state.ads.ads,
-		ads_per_page: state.ads.ads_per_page
+		ads_per_page: state.ads.ads_per_page,
+		featured_ad: state.ads.featured_ad
 	}
 }
 
