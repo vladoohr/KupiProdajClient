@@ -11,7 +11,7 @@ class Advertisements extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			category: 1,
+			category: 0,
 			search: ''
 		}
 	}
