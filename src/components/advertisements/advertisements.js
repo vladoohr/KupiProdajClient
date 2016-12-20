@@ -64,8 +64,10 @@ class Advertisements extends Component {
 	}
 
 	renderFeaturedAd() {
-		const featured_ad = this.props
+		const { featured_ad } = this.props
 		const image_url = featured_ad.image ? featured_ad.image : '../../../images/images.jpg';
+
+		console.log(featured_ad)
 
 		if (featured_ad.id) {
 			return (
