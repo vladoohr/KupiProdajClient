@@ -63,31 +63,36 @@ class Advertisements extends Component {
 		)
 	}
 
+	renderFeaturedAd() {
+		const featured_ad = this.props
+		const image_url = featured_ad.image ? featured_ad.image : '../../../images/images.jpg';
+
+		if (featured_ad.id) {
+			return (
+				<div className="featured-ad">					
+    			<img className="featured-image" src={image_url}/>
+    			<div className="featured-title">
+    				<Link to={`/ad/${featured_ad.id}`}>{featured_ad.title}</Link>
+    			</div>
+    			<p className="featured-price">{featured_ad.price} МКД</p> 
+    		</div>
+			) 
+		} else {
+			return ''
+		}
+	}
+
 	render() {
 		const { location } = this.props
-		const { handleSubmit, pristine, reset, submitting, featured_ad } = this.props
-
-    let image_url;
-
-    if (! featured_ad.image) {
-    	image_url = '../../../images/images.jpg'
-    } else {
-    	image_url = featured_ad.image
-    }
+		const { handleSubmit, pristine, reset, submitting } = this.props
 
 		return (
 				<div className='container'>
 					<div className="col-md-2 m-t-2">
 						<nav className="nav nav-pills nav-stacked">
-							{this.renderCategories()}
+							{ this.renderCategories() }
 						</nav>
-						<div className="featured-ad">					
-		    			<img className="featured-image" src={image_url}/>
-		    			<div className="featured-title">
-		    				<Link to={`/ad/${featured_ad.id}`}>{featured_ad.title}</Link>
-		    			</div>
-		    			<p className="featured-price">{featured_ad.price} МКД</p> 
-		    		</div>
+						  { this.renderFeaturedAd() }
 					</div>
 					
 					<div className="col-md-10 advertisements">
