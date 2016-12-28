@@ -2,6 +2,7 @@ import {
 	NEW_AD,
 	EDIT_AD,
 	DELETE_AD,
+	DELETE_PHOTO_AD,
 	ERROR_AD,
 	LOAD,
 	GET_ADS,
@@ -28,6 +29,8 @@ export default function(state=INITIAL_STATE, action) {
 			return {...state, errorMessages: [], successEditMessage: action.payload}
 		case DELETE_AD:
 			return {...state, successMessage: action.payload}
+		case DELETE_PHOTO_AD:
+			return {...state, load_data: action.payload.load_ad}
 		case ERROR_AD:
 			return {...state, errorMessages: action.payload.errors, successMessage: ''}
 		case LOAD:

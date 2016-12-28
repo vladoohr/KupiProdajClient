@@ -5,6 +5,11 @@ import { Link } from 'react-router'
 import * as actions from '../../actions'
 
 class SingleAdvertisement extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = { image: '' }
+    }
+
     componentWillMount() {
         const { ad_id } = this.props.params
         this.props.loadData(ad_id)
@@ -15,6 +20,11 @@ class SingleAdvertisement extends React.Component {
         if (r == true) {
            this.props.deleteAdvertisement(this.props.ad.id, this.props.user.id)
         }
+    }
+
+    changeImage(image) {
+        this.setState({image})
+        console.log(this.state.image)
     }
 
     renderButtons() {
@@ -38,16 +48,50 @@ class SingleAdvertisement extends React.Component {
         }
     }
 
+    renderImages() {
+        const { images } = this.props.ad
+        if ( images ) {
+            return (
+                images.map( (img, index) => {
+                    return (
+                        <img
+                            onClick={this.changeImage.bind(this, img.url)}
+                            className="search-ad-image" 
+                            src={img.url}
+                            key={index}
+                            height="50" 
+                            width="50" />
+                    )   
+                })
+            )
+        }
+
+        return ''
+    }
+
 	render() {
-        const { id, image, title, description, price, updated_at, city, category } = this.props.ad
+        const { id, images, title, description, price, updated_at, city, category } = this.props.ad
         const { full_name, email, phone } = this.props.user
-        const image_url = image ? image : '../../../images/images.jpg';
+        let image_url
+
+        console.log(images)
+
+        if ( this.state.image != '' ) {
+            image_url = this.state.image
+        } else if ( typeof images !== 'undefined' && images.length > 0 ) {
+            image_url = images[0].url
+        } else {
+            image_url = '../../../images/images.jpg'
+        }
 
         return (
             <div className="container">
                 <div className="col-md-10 advertisement">
                     <div className=" col-md-4 pull-left">
-                        <img className="search-ad-image" src={image_url} height="150" width="150" /> 
+                        <img className="search-ad-image" src={image_url} height="150" width="100%" />
+                        <div className="ad-images">
+                            { this.renderImages()}
+                        </div>
                         <p className="m-l-2"><small>{updated_at}</small></p>
                         <p className="left-text">&#9737; {city}</p>
                         <p className="left-text">&#9759; {category}</p>

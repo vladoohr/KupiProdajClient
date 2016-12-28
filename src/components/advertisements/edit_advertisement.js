@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Field, Fields, reduxForm } from 'redux-form'
+import { Link } from 'react-router'
 import { connect } from 'react-redux';
 
 import * as actions from '../../actions'
@@ -73,6 +74,36 @@ class EditAdvertisements extends Component {
     items.map(item => <option value={item.id} key={item.id}>{item.name}</option>)
   )
 
+  renderImages() {
+      const { images } = this.props.initialValues
+      if ( images ) {
+          return (
+              images.map( (img, index) => {
+                  return (
+                      <div className="col-md-3 ad-images" key={index}>
+                        <img
+                          className="edit-image" 
+                          src={img.url}
+                          height="50" 
+                          width="100%" />
+
+                        <Link onClick={this.deleteImage.bind(this,img.id)} className="btn btn-danger">Избриши</Link>
+                      </div>
+                  )   
+              })
+          )
+      }
+
+      return ''
+  }
+
+  deleteImage(ph_id) {
+    const r = confirm("Дали сте сигурен?")
+    if (r == true) {
+      this.props.deleteAdImage(ph_id, this.props.params.id)
+    }
+  }
+
   render() {
     const { handleSubmit, pristine, reset, submitting, valid, initData } = this.props
 
@@ -122,6 +153,10 @@ class EditAdvertisements extends Component {
                 <option>-Избери-</option>
                 { this.renderItems(this.props.cities) }
               </Field>
+            </div>
+
+            <div className="col-md-12">
+                { this.renderImages()}
             </div>
 
             { this.renderError() }
@@ -175,34 +210,6 @@ const validate = values => {
 
 const mapStateToProps = state => {
   let initData = state.ads.load_data
-
-//   var getFileBlob = function (url, cb) {
-//         var xhr = new XMLHttpRequest();
-//         xhr.open("GET", url);
-//         xhr.responseType = "blob";
-//         xhr.addEventListener('load', function() {
-//             cb(xhr.response);
-//         });
-//         xhr.send();
-//   };
-
-//   var blobToFile = function (blob, name) {
-//           blob.lastModifiedDate = new Date();
-//           blob.name = name;
-//           return blob;
-//   };
-
-//   var getFileObject = function(filePathOrUrl, cb) {
-//          getFileBlob(filePathOrUrl, function (blob) {
-//             cb(blobToFile(blob, 'test.jpg'));
-//          });
-//   };
-
-//   getFileObject("http://localhost:3000/" + "/uploads/advertisement/image/41/file.jpeg"
-// , function (fileObject) {
-//        console.log(new File([fileObject], "filename.jpeg"));
-//        initData.image = new File([fileObject], "filename.jpeg")
-//   }); 
 
   return {
     errorMessages: state.ads.errorMessages,

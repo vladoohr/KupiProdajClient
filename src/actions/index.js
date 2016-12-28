@@ -11,14 +11,15 @@ import {
 	NEW_AD,
 	EDIT_AD,
 	DELETE_AD,
+	DELETE_PHOTO_AD,
 	ERROR_AD,
 	LOAD,
 	GET_CITIES,
 	GET_CATEGORIES
 } from './types'
 
-const ROOT_URL = 'https://advertisementsserver.herokuapp.com'
-// const ROOT_URL ='http://localhost:3000/'
+// const ROOT_URL = 'https://advertisementsserver.herokuapp.com'
+const ROOT_URL ='http://localhost:3000/'
 
 export function signupUser(values) {
 	return dispatch => {
@@ -121,6 +122,18 @@ export function deleteAdvertisement(ad_id, user_id) {
 	}
 }
 
+export function deleteAdImage(ph_id, ad_id) {
+	return dispatch => {
+		axios.delete(`${ROOT_URL}/api/v1/photos/${ph_id}`, { params: {ad_id: ad_id} })
+			.then(response => {
+				dispatch({
+					type: DELETE_PHOTO_AD,
+					payload: response.data
+				})
+			})
+	}	
+}
+
 export function getUserAdvertisements(id, page) {
 	return dispatch => {
 		axios.get(`${ROOT_URL}/api/v1/users/advertisements/${id}?page=${page}`)
@@ -149,7 +162,6 @@ export function getFeaturedAd() {
 	return dispatch => {
 		axios.get(`${ROOT_URL}/api/v1/advertisement/featured`)
 			.then(response => {
-				console.log(response.data)
 				dispatch({
 					type: FEATURED_AD,
 					payload: response.data 

@@ -35,11 +35,26 @@ footer {
 	color: #373A3C;
 	text-align: center;
 	z-index: 10;
+	margin-top: 50px;
 }
 
 textarea{
 	width: 100% !important;
 	height: 7rem !important;
+}
+
+li {
+	list-style-type: none;
+}
+
+ul li.member {
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+
+ul {
+	padding: 0;
+	margin: 0;
 }
 
 .middleContent {
@@ -85,8 +100,9 @@ textarea{
 	margin-top: 10px;
 }
 
-.search-ad-image {
+.edit-image {
 	border: 1px solid #CDCDCE;
+  margin-bottom: 10px;
 }
 
 .search-ad-title {
@@ -100,6 +116,11 @@ textarea{
 .search-ad-price {
 	font-weight: bold;
   color: #428bca;
+}
+
+.ad-images {
+	margin-top: 10px;
+	margin-bottom: 10px;
 }
 
 .right-text {

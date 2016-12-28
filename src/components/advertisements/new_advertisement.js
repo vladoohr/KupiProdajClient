@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Field, Fields, reduxForm } from 'redux-form'
+import { Field, FieldArray, reduxForm } from 'redux-form'
 import { connect } from 'react-redux';
 
 import * as actions from '../../actions'
@@ -14,21 +14,23 @@ class NewAdvertisements extends Component {
     const { id } = JSON.parse(localStorage.getItem('user'))
     const { newAdvertisement } = this.props;
     values.user = id
+    values.images = []
 
-    if (values.image) {
-      // Make File object base64 encoded
-      let reader = new FileReader()
-      // onload method is triggered by readAsDataURL
-      reader.onload = () => {
-          values.image = reader.result;
-
-          // call newAdvertisement here beacause onload method run asynchronously 
-          newAdvertisement(values)
-      }
-      reader.readAsDataURL(values.image[0])      
-    } else {
-      newAdvertisement(values)
+    if (values.members.length > 0 ) {
+      values.members.forEach(obj => {
+        // Make File object base64 encoded
+        let reader = new FileReader()
+        // onload method is triggered by readAsDataURL
+        reader.onload = () => {
+          values.images.push(reader.result)
+        }
+        reader.readAsDataURL(obj.image[0])        
+      })
     }
+
+    // call newAdvertisement here beacause onload method runs asynchronously
+    // Timeout ensure that onload mwthod will finished before newAdvertisement is called 
+    setTimeout(() => { newAdvertisement(values) }, 1000)
   }
 
   renderError = () => {
@@ -85,6 +87,22 @@ class NewAdvertisements extends Component {
     items.map(item => <option value={item.id} key={item.id}>{item.name}</option>)
   )
 
+  renderMembers = ({ fields, meta: { touched, error } }) => (
+    <ul>
+      <li>
+        <button type="button" className="btn btn-info" onClick={() => fields.push({})}>Додади слика</button>
+        {touched && error && <span>{error}</span>}
+      </li>
+      {fields.map((member, index) =>
+        <li key={index} className="member">
+          <button type="button" className="btn btn-danger" onClick={() => fields.remove(index)}>Избриши</button>
+          <h4>Слика #{index + 1}</h4>
+          <Field name={`${member}.image`} type="file" component={this.renderTextField} label="Слика" />
+        </li>
+      )}
+    </ul>
+  )
+
   render() {
     const { handleSubmit, pristine, reset, submitting, valid } = this.props
 
@@ -136,8 +154,8 @@ class NewAdvertisements extends Component {
 					    </Field>
 					  </div>
 
-					  <div className="form-group">
-              <Field name="image" type="file" component={this.renderTextField} label="Слика" />
+            <div className="form-group">
+              <FieldArray name="members" component={this.renderMembers}/>
             </div>
 
             { this.renderError() }

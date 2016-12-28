@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Field, Fields, reduxForm } from 'redux-form' 
+import { Field, reduxForm } from 'redux-form' 
 import { connect } from 'react-redux'
 import { Link } from 'react-router'
 import * as actions from '../../actions'
@@ -65,11 +65,10 @@ class Advertisements extends Component {
 
 	renderFeaturedAd() {
 		const { featured_ad } = this.props
-		const image_url = featured_ad.image ? featured_ad.image : '../../../images/images.jpg';
 
-		console.log(featured_ad)
+		if (featured_ad) {
+			const image_url = featured_ad.image ? featured_ad.image : '../../../images/images.jpg';
 
-		if (featured_ad.id) {
 			return (
 				<div className="featured-ad">					
     			<img className="featured-image" src={image_url}/>
