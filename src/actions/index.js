@@ -18,8 +18,8 @@ import {
 	GET_CATEGORIES
 } from './types'
 
-// const ROOT_URL = 'https://advertisementsserver.herokuapp.com'
-const ROOT_URL ='http://localhost:3000/'
+const ROOT_URL = 'https://advertisementsserver.herokuapp.com'
+// const ROOT_URL ='http://localhost:3000/'
 
 export function signupUser(values) {
 	return dispatch => {
