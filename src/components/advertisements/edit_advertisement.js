@@ -181,9 +181,9 @@ const validate = values => {
     }    
   })
 
-  if(values.title && values.title.length > 75) {
-    errors.title = 'Насловот може да содржи максимум 75 карактери!'
-  }
+  // if(values.title && values.title.length > 75) {
+  //   errors.title = 'Насловот може да содржи максимум 75 карактери!'
+  // }
 
   if(values.description && values.description.length > 500) {
     errors.description = 'Описот може да содржи максимум 500 карактери!'
