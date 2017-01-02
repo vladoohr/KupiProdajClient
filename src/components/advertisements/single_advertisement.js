@@ -24,7 +24,6 @@ class SingleAdvertisement extends React.Component {
 
     changeImage(image) {
         this.setState({image})
-        console.log(this.state.image)
     }
 
     renderButtons() {
@@ -73,8 +72,6 @@ class SingleAdvertisement extends React.Component {
         const { id, images, title, description, price, updated_at, city, category } = this.props.ad
         const { full_name, email, phone } = this.props.user
         let image_url
-
-        console.log(images)
 
         if ( this.state.image != '' ) {
             image_url = this.state.image

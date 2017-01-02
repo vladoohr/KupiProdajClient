@@ -173,7 +173,7 @@ class EditAdvertisements extends Component {
 
 const validate = values => {
   const errors = {}
-  const required_fields = ['description', 'state', 'purpose', 'category', 'location']
+  const required_fields = ['title', 'description', 'state', 'purpose', 'category', 'location']
 
   required_fields.forEach(field => {
     if (!values[field]) {
@@ -181,9 +181,9 @@ const validate = values => {
     }    
   })
 
-  // if(values.title && values.title.length > 75) {
-  //   errors.title = 'Насловот може да содржи максимум 75 карактери!'
-  // }
+  if(values.title && values.title.length > 75) {
+    errors.title = 'Насловот може да содржи максимум 75 карактери!'
+  }
 
   if(values.description && values.description.length > 500) {
     errors.description = 'Описот може да содржи максимум 500 карактери!'
