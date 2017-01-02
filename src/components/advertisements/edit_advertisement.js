@@ -173,7 +173,7 @@ class EditAdvertisements extends Component {
 
 const validate = values => {
   const errors = {}
-  const required_fields = ['title', 'description', 'state', 'purpose', 'category', 'location']
+  const required_fields = ['description', 'state', 'purpose', 'category', 'location']
 
   required_fields.forEach(field => {
     if (!values[field]) {
