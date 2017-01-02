@@ -174,6 +174,7 @@ export function loadData(id) {
 	return dispatch => {
 		axios.get(`${ROOT_URL}/api/v1/advertisements/${id}`, {id: id})
 		.then(response => {
+			console.log(response.data)
 			dispatch({
 				type: LOAD,
 				payload: response.data
