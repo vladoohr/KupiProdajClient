@@ -25,6 +25,18 @@ em.gray {
 	font-weight: bold;
 }
 
+.nav-pills {
+	background: #373A3C;
+}
+
+.nav-pills a {
+	color: #CDCDCE !important;
+}
+
+nav.nav.nav-pills {
+	border-radius: 5px;
+}
+
 /*General*/
 html {
   font-size: 10px;

@@ -31,7 +31,7 @@ export function signupUser(values) {
 				})
 				localStorage.setItem('auth_token', response.data.token)				
 				localStorage.setItem('user', JSON.stringify(response.data.user))				
-				browserHistory.push('/')
+				browserHistory.push('/?page=1')
 			})
 			.catch(error => {
 				dispatch({
@@ -100,6 +100,7 @@ export function editAdvertisement(values, ad_id) {
 					payload: response.data.message 
 				})
 			})
+			browserHistory.push(`/ad/${ad_id}`)
 			.catch(error => {
 				dispatch({
 					type: ERROR_AD,

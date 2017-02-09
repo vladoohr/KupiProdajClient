@@ -75,12 +75,13 @@ class Header extends Component {
 		    			&#9776;
 		  			</button>
 
-
 		  			<div className={ "navbar-toggleable-xs " + collapseClass}>
 			  			<a className="navbar-brand" href="/?page=1">
 						    <img src="../../images/logo.jpg" width="40" height="40" className="d-inline-block align-top" alt="" />
-						    <em> KupiProdaj.mk</em>
 						  </a>
+			  			<a className="navbar-brand" href="/?page=1">
+							  <em>KupiProdaj.mk</em>
+							</a>
 			        <ul className={"nav navbar-nav " + pullNav}>
 			        	<li className={ "nav-item " + rootActive }>
 			        		<Link to="/?page=1" className="nav-link">Сите огласи <em className='red'>/</em></Link>

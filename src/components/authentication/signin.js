@@ -36,7 +36,7 @@ class Signin extends Component {
 
     return(
       <div className="container m-t-3">
-        <div className="col-md-6 offset-md-3">
+        <div className="col-md-6 col-md-offset-3">
           <h1 className="signup-header">Најавете се</h1>
           <form onSubmit={handleSubmit(this.submitForm.bind(this))}>
             <div className="form-group">

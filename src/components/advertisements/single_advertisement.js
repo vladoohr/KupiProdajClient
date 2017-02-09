@@ -68,6 +68,18 @@ class SingleAdvertisement extends React.Component {
         return ''
     }
 
+    renderSuccessMsg() {
+        const { successEditMessage } = this.props
+
+        if ( successEditMessage != "" ) {
+            return (
+                <div className='alert alert-success'>
+                    <p>{ successEditMessage }</p>
+                </div>
+            )
+        }
+    }
+
 	render() {
         const { id, images, title, description, price, updated_at, city, category } = this.props.ad
         const { full_name, email, phone } = this.props.user
@@ -83,6 +95,9 @@ class SingleAdvertisement extends React.Component {
 
         return (
             <div className="container">
+                <div className="col-md-10">
+                    { this.renderSuccessMsg() }
+                </div>
                 <div className="col-md-10 advertisement">
                     <div className=" col-md-4 pull-left">
                         <img className="search-ad-image" src={image_url} height="150" width="100%" />
@@ -115,7 +130,8 @@ class SingleAdvertisement extends React.Component {
 const mapStateToProps = state => {
     return {
         user: state.ads.user,
-        ad: state.ads.ad_data
+        ad: state.ads.ad_data,
+        successEditMessage: state.ads.successEditMessage
     }
 }
 

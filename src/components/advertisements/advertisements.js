@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Field, reduxForm } from 'redux-form' 
 import { connect } from 'react-redux'
-import { Link } from 'react-router'
+import { Link, browserHistory } from 'react-router'
 import * as actions from '../../actions'
 
 import Advertisement from './advertisement'
@@ -18,6 +18,10 @@ class Advertisements extends Component {
 
 	componentWillMount() {
 		const { search, category } = this.state
+		
+		// change route in order pagination to work properly
+		browserHistory.push('/?page=1')
+		
 		this.props.getAdvertisements(1, {search, category})
 		this.props.getFeaturedAd()
 	}
@@ -90,10 +94,10 @@ class Advertisements extends Component {
 		return (
 				<div className='container'>
 					<div className="col-md-2 m-t-2">
-						<nav className="nav nav-pills nav-stacked">
+						<nav className="nav nav-pills">
 							{ this.renderCategories() }
 						</nav>
-						  { this.renderFeaturedAd() }
+						{ this.renderFeaturedAd() }
 					</div>
 					
 					<div className="col-md-10 advertisements">
@@ -104,7 +108,7 @@ class Advertisements extends Component {
 
 						{this.props.ads_per_page.map((ad) => <Advertisement {...this.props} key={ad.id} ad={ad} />)}
 					
-						<div className="col-md-6 offset-md-3">
+						<div className="col-md-6 col-md-offset-3">
 							<Pagination {...this.props} getAds={this.getAds.bind(this)} location={location} />
 						</div>
 	        </div>

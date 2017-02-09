@@ -29,7 +29,7 @@ class NewAdvertisements extends Component {
     }
 
     // call newAdvertisement here beacause onload method runs asynchronously
-    // Timeout ensure that onload mwthod will finished before newAdvertisement is called 
+    // Timeout ensure that onload method will finished before newAdvertisement is called 
     setTimeout(() => { newAdvertisement(values) }, 1000)
   }
 

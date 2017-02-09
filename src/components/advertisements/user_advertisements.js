@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router' 
+import { Link, browserHistory } from 'react-router' 
 import * as actions from '../../actions'
 
 import Advertisement from './advertisement'
@@ -9,6 +9,10 @@ import Pagination from './pagination'
 class UserАdvertisements extends Component {
 	componentWillMount() {
 		const { user } = this.props
+
+		// change route in order pagination to work properly
+		browserHistory.push(`/user/ads/${user.id}?page=1`)
+
 		this.props.getUserAdvertisements(user.id, 1)
 	}
 
@@ -35,9 +39,11 @@ class UserАdvertisements extends Component {
 
 		return (
 			<div className='container'>
-				{ this.rednerSuccessMessage() }
+				<div className="col-md-10">
+					{ this.rednerSuccessMessage() }
+				</div>
 				{this.props.user_ads_per_page.map((ad) => <Advertisement {...this.props} key={ad.id} ad={ad} />)}
-				<div className="col-md-6 offset-md-3">
+				<div className="col-md-6 col-md-offset-3">
 					<Pagination {...this.props} ads={this.props.user_ads} getAds={this.getAds.bind(this)} location={location} />
 				</div>
 			</div>
